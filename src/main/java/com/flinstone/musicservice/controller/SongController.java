@@ -1,22 +1,30 @@
 package com.flinstone.musicservice.controller;
 
+import com.flinstone.musicservice.entity.CategoryEntity;
 import com.flinstone.musicservice.entity.SongEntity;
+import com.flinstone.musicservice.entity.SubCategoryEntity;
+import com.flinstone.musicservice.service.CategoryService;
 import com.flinstone.musicservice.service.SongService;
-import lombok.Data;
+import com.flinstone.musicservice.service.SubCategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
-
+@CrossOrigin(origins = "*")
 @RequestMapping("/api/v1")
 @RestController
 public class SongController {
 
-    SongService songService;
+    final SongService songService;
+    final CategoryService categoryService;
+    final SubCategoryService subCategoryService;
 
-    public SongController(SongService songService) {
+    public SongController(SongService songService, CategoryService categoryService, SubCategoryService subCategoryService) {
         this.songService = songService;
+        this.categoryService = categoryService;
+        this.subCategoryService = subCategoryService;
     }
 
     //getAllSongs
@@ -66,6 +74,58 @@ public class SongController {
         return songService.createSong(songEntity);
     }
 
+    //CATEGORIES
+    //getCategories
+    @GetMapping("/category")
+    List<CategoryEntity> getAllCategories(){
+        return categoryService.getAll();
+    }
+    //getCategoryById
+    @GetMapping("/category/{id}")
+    Optional<CategoryEntity> getCategoryById(@PathVariable("id") String id){
+        return categoryService.findByCategory(id);
+    }
+    //create category
+    @PostMapping("/category")
+    CategoryEntity createCategory(@RequestBody CategoryEntity category){
+        return categoryService.create(category);
+    }
+    //delete category
+    @DeleteMapping("/category/{id}")
+    void deleteCategory(@PathVariable("id") String id){
+        categoryService.deleteBYId(id);
+    }
+
+    //SUB CATEGORIES
+    //getSubCategories
+    @GetMapping("/subcategory")
+    List<SubCategoryEntity> getAllSubCategories(){
+        return subCategoryService.getAll();
+    }
+    //getSubCategoryById
+    @GetMapping("/subcategory/{category}")
+    List<SubCategoryEntity> findAllByCategoryId(@PathVariable("category") String category){
+        return subCategoryService.findAllByCategoryId(category);
+    }
+    @GetMapping("/subcategory/{category}/{subcategory}")
+    SubCategoryEntity findByCategoryIdSubcategoryId(@PathVariable("category") String category,@PathVariable("subcategory") String subcategory){
+        return subCategoryService.findBySubCategoryId(category,subcategory);
+    }
+    //create subcategory
+    @PostMapping("/subcategory")
+    SubCategoryEntity createSubCategory(@RequestBody SubCategoryEntity subcategory){
+        return subCategoryService.create(subcategory);
+    }
+    //create subcategories
+    @PostMapping("/subcategories")
+    List<SubCategoryEntity> createSubCategories(@RequestBody List<SubCategoryEntity> subcategory){
+        return subCategoryService.saveAll(subcategory);
+    }
+//    //delete subcategory
+//    @DeleteMapping("/subcategory/{id}")
+//    void deleteSubCategory(@PathVariable("id") String id){
+//        subCategoryService.deleteBYId(id);
+//    }
 
 
 }

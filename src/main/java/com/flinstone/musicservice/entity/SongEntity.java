@@ -6,6 +6,8 @@ import org.springframework.data.cassandra.core.mapping.Table;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Table("song")
@@ -14,9 +16,10 @@ public class SongEntity {
 
     @PrimaryKey
     private String id = UUID.randomUUID().toString();
+    private Set<String> tags = new HashSet<>();
     private String title;
-    private String Genre;
-    private String releaseDate =new SimpleDateFormat("yyyy-mm-dd HH:mm").format(new Date());
+    private String genre;
+    private String releaseDate =new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date());
     private String artist;
     private String language;
     private String album;
