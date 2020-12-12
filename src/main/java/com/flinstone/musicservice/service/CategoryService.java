@@ -1,6 +1,7 @@
 package com.flinstone.musicservice.service;
 
 import com.flinstone.musicservice.entity.CategoryEntity;
+import com.flinstone.musicservice.entity.SubCategoryEntity;
 import com.flinstone.musicservice.repository.CategoryRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -31,8 +32,13 @@ public class CategoryService {
     }
     //delete
     public void deleteBYId(String id){
-         categoryRepo.deleteById(id);
+        categoryRepo.deleteById(id);
     }
-
+    //update
+    public void updateCategory(String categoryId, CategoryEntity newCategory){
+        CategoryEntity temp = findByCategory(categoryId).get();
+        temp.setCategoryId(newCategory.getCategoryId());
+        categoryRepo.save(temp);
+    }
 
 }

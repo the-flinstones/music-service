@@ -62,10 +62,16 @@ public class SongController {
         return songService.getByLanguage(language);
     }
 
+    //getSongByActor
+    @GetMapping("/songs/actor/{actor}")
+    List<SongEntity> getSongsByActor(@PathVariable("actor") String actor){
+        return songService.getByActor(actor);
+    }
+
     //deleteById
     @DeleteMapping("/songs/{id}")
     void deleteById(@PathVariable("id") String id){
-         songService.deleteById(id);
+        songService.deleteById(id);
     }
 
     //createSong
@@ -74,7 +80,7 @@ public class SongController {
         return songService.createSong(songEntity);
     }
 
-    //CATEGORIES
+    //CATEGORIES-------------------------------------------------------------------------------------------------------------
     //getCategories
     @GetMapping("/category")
     List<CategoryEntity> getAllCategories(){
@@ -96,7 +102,12 @@ public class SongController {
         categoryService.deleteBYId(id);
     }
 
-    //SUB CATEGORIES
+    @PutMapping("/categories/{categoryId}")
+    void updateCategories(@PathVariable("categoryId") String categoryId,@RequestBody CategoryEntity newCategory){
+        categoryService.updateCategory(categoryId,newCategory);
+    }
+
+    //SUB CATEGORIES---------------------------------------------------------------------------------------------------------
     //getSubCategories
     @GetMapping("/subcategory")
     List<SubCategoryEntity> getAllSubCategories(){
@@ -109,7 +120,7 @@ public class SongController {
     }
     @GetMapping("/subcategory/{category}/{subcategory}")
     SubCategoryEntity findByCategoryIdSubcategoryId(@PathVariable("category") String category,@PathVariable("subcategory") String subcategory){
-        return subCategoryService.findBySubCategoryId(category,subcategory);
+        return subCategoryService.findByCategoryIdSubCategoryId(category,subcategory);
     }
     //create subcategory
     @PostMapping("/subcategory")
@@ -121,11 +132,12 @@ public class SongController {
     List<SubCategoryEntity> createSubCategories(@RequestBody List<SubCategoryEntity> subcategory){
         return subCategoryService.saveAll(subcategory);
     }
-//    //delete subcategory
-//    @DeleteMapping("/subcategory/{id}")
-//    void deleteSubCategory(@PathVariable("id") String id){
-//        subCategoryService.deleteBYId(id);
-//    }
+    @PutMapping("/subcategories/{categoryId}/{subcategoryId}")
+    void updateSubCategories(@PathVariable("categoryId") String categoryId,@PathVariable("subcategoryId") String subcategoryId,
+                             @RequestBody SubCategoryEntity subCategory){
+        subCategoryService.updateByCategoryIdSubCategoryId(categoryId,subcategoryId,subCategory);
+    }
+
 
 
 }

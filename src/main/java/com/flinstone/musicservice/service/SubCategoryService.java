@@ -32,14 +32,30 @@ public class SubCategoryService {
 
     }
     //findSubCategory
-    public SubCategoryEntity findBySubCategoryId(String category,String subcategory){
+    public SubCategoryEntity findByCategoryIdSubCategoryId(String category,String subcategory){
         List<SubCategoryEntity> subcategories =  findAllByCategoryId(category);
         for (SubCategoryEntity subcat:subcategories
-             ) {
+        ) {
             if(subcat.getSubCategoryId().equals(subcategory))
-            return subcat;
+                return subcat;
         }
         return null;
     }
-
+    //update
+    public void updateByCategoryIdSubCategoryId(String categoryId,String subcategoryId,SubCategoryEntity newSubcategory){
+//        List<SubCategoryEntity> subcategories =  findAllByCategoryId(categoryId);
+//        for (SubCategoryEntity subcat:subcategories
+//        ) {
+//            if(subcat.getSubCategoryId().equals(subcategoryId))
+//                subcat.setCategoryId(newSubcategory.getCategoryId());
+//                subcat.setSubCategoryId(newSubcategory.getSubCategoryId());
+//                subcat.setImageUrl(newSubcategory.getImageUrl());
+//                return subcat;
+//        }
+//        return null;
+        SubCategoryEntity temp = findByCategoryIdSubCategoryId(categoryId,subcategoryId);
+        temp.setSubCategoryId(newSubcategory.getSubCategoryId());
+        System.out.println(findByCategoryIdSubCategoryId(categoryId,newSubcategory.getSubCategoryId()));
+        subCategoryRepo.save(temp);
+    }
 }

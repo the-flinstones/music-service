@@ -10,8 +10,8 @@ import java.util.List;
 
 @Service
 public class SongService {
-  SongRepository songRepository;
-  List<SongEntity> allSongs;
+    SongRepository songRepository;
+    List<SongEntity> allSongs;
 
     public SongService(SongRepository songRepository) {
         this.songRepository = songRepository;
@@ -19,7 +19,7 @@ public class SongService {
     }
 
     //getAll
-   public List<SongEntity> getAll(){
+    public List<SongEntity> getAll(){
         return songRepository.findAll();
     }
 
@@ -33,21 +33,33 @@ public class SongService {
     }
     //creteSong
     public SongEntity createSong(SongEntity songEntity){
-      return   songRepository.save(songEntity);
+        return   songRepository.save(songEntity);
     }
 
 
     //getByAlbum
     public List<SongEntity> getByAlbum(String album){
-       List<SongEntity> albumSongs = new ArrayList<>();
+        List<SongEntity> albumSongs = new ArrayList<>();
 
 
         for (SongEntity songEntity:allSongs
-             ) {
+        ) {
             if(songEntity.getAlbum().equals(album))
-            albumSongs.add(songEntity);
+                albumSongs.add(songEntity);
         }
         return albumSongs;
+    }
+    //getByActor
+    public List<SongEntity> getByActor(String actor){
+        List<SongEntity> actorSongs = new ArrayList<>();
+
+
+        for (SongEntity songEntity:allSongs
+        ) {
+            if(songEntity.getActor().equals(actor))
+                actorSongs.add(songEntity);
+        }
+        return actorSongs;
     }
 
     //getByArtist
@@ -70,13 +82,13 @@ public class SongService {
 
         for (SongEntity song:allSongs
         ) {
-            if(song.getGenre().equals(genre))
+            if(song.getMood().equals(genre))
                 genreSongs.add(song);
         }
         return genreSongs;
     }
 
-    //getByGenre
+    //getByLang
     public List<SongEntity> getByLanguage(String language){
         List<SongEntity> languageSongs = new ArrayList<>();
 
