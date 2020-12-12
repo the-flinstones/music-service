@@ -37,6 +37,16 @@ public class SongService {
     }
     //creteSong
     public SongEntity createSong(SongEntity songEntity){
+        String songURL = songEntity.getSongUrl();
+        String newURL="http://docs.google.com/uc?export=open&id=";
+
+      songURL=  songURL.replace("https://drive.google.com/file/d/","");
+
+      songURL=  songURL.replace("/view?usp=sharing","");
+
+         newURL = newURL.concat(songURL);
+        songEntity.setSongUrl(newURL);
+
         return   songRepository.save(songEntity);
     }
 
