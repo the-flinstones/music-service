@@ -33,9 +33,10 @@ public class UserPlaylistsService {
     }
 
     //----------------------------Get playlist by ID--------------------------------------------------------
-    public UserPlaylistsEntity getPlaylistById(String id){
-
-        return userPlaylistsRepo.findById(id).get();
+    public List<UserPlaylistsEntity> getPlaylistsById(String id)
+    {
+        List<UserPlaylistsEntity> playlists = userPlaylistsRepo.findByUserId(id);
+        return userPlaylistsRepo.findByUserId(id);
     }
 
     //----------------------------Get all playlists----------------------------------------------------
