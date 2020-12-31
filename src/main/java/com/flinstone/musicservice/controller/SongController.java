@@ -80,6 +80,11 @@ public class SongController {
         return songService.createSong(songEntity);
     }
 
+    //create songs
+    @PostMapping("/allsongs")
+    List<SongEntity> createSongs(@RequestBody List<SongEntity> song){
+        return songService.createAll(song);
+    }
     //CATEGORIES-------------------------------------------------------------------------------------------------------------
     //getCategories
     @GetMapping("/category")

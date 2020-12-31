@@ -1,5 +1,6 @@
 package com.flinstone.musicservice.service;
 
+import com.flinstone.musicservice.entity.CategoryEntity;
 import com.flinstone.musicservice.entity.SongEntity;
 import com.flinstone.musicservice.repository.SongRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +23,10 @@ public class SongService {
     public List<SongEntity> getAll(){
         return songRepository.findAll();
     }
-
+    //saveAll
+    public List<SongEntity> createAll(List<SongEntity> songs){
+        return songRepository.saveAll(songs);
+    }
     //getById
     public SongEntity getById(String id){
         return songRepository.findById(id).get();
@@ -33,6 +37,16 @@ public class SongService {
     }
     //creteSong
     public SongEntity createSong(SongEntity songEntity){
+        String songURL = songEntity.getSongUrl();
+        String newURL="http://docs.google.com/uc?export=open&id=";
+
+      songURL=  songURL.replace("https://drive.google.com/file/d/","");
+
+      songURL=  songURL.replace("/view?usp=sharing","");
+
+         newURL = newURL.concat(songURL);
+        songEntity.setSongUrl(newURL);
+
         return   songRepository.save(songEntity);
     }
 
