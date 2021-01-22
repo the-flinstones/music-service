@@ -1,9 +1,6 @@
 package com.flinstone.musicservice.controller;
 
-import com.flinstone.musicservice.entity.CategoryEntity;
-import com.flinstone.musicservice.entity.UserDetailsEntity;
 import com.flinstone.musicservice.entity.UserPlaylistsEntity;
-import com.flinstone.musicservice.service.UserDetailsService;
 import com.flinstone.musicservice.service.UserPlaylistsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -34,9 +31,8 @@ public class UserPlaylistsController {
 
     //-------------------------------Get Playlist By ID --------------------------------------------
     @GetMapping(value = "/playlist/{id}")
-    public UserPlaylistsEntity getPlaylistById(@PathVariable("id") String id) {
-
-        return userPlaylistsService.getPlaylistById(id);
+    public List<UserPlaylistsEntity> getPlaylistById(@PathVariable("id") String id) {
+        return userPlaylistsService.getPlaylistsById(id);
     }
 
     //-------------------------------Get All Playlists--------------------------------------------

@@ -5,14 +5,16 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
 import org.springframework.data.cassandra.core.mapping.Table;
+import org.springframework.data.cassandra.core.mapping.UserDefinedType;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 
 @Getter
 @Setter
-@Table("song")
 @Data
+@UserDefinedType(value = "song")
 public class SongEntity {
 
     @PrimaryKey
@@ -32,4 +34,21 @@ public class SongEntity {
     private String songLyrics;
     private int likesCount;
     private int playedCount;
+    @Override
+    public boolean equals(Object obj)
+    {   // checking if both the object references are
+        // referring to the same object.
+        if(this == obj)
+            return true;
+
+        if(obj == null || obj.getClass()!= this.getClass())
+            return false;
+
+        // type casting of the argument.
+        SongEntity songEntity = (SongEntity) obj;
+
+        // comparing the state of argument with
+        // the state of 'this' Object.
+        return (songEntity.getId() == this.getId());
+    }
 }
